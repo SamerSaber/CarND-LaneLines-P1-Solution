@@ -15,33 +15,41 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/grayscale.jpg "Grayscale"
+
 
 ---
 
 ### Reflection
 
-### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
+### 1.1 pipe line description
 
-My pipeline consisted of 5 steps. First, I converted the images to grayscale, then I .... 
+A- Convert to gray scale
+B- Run Gausian Blur filter with kernel size = 5.
+C- Run Canny detector to detect the edges. 
+D- Determine the ROI.
+E- Run Hough transform to detect the lines 
+F- Averaging/Extrapolating the lines in the draw_lines() function as following.
 
-In order to draw a single line on the left and right lanes, I modified the draw_lines() function by ...
+## 1.2 draw_lines() description
 
-If you'd like to include images to show how the pipeline works, here is how to include an image: 
+A- Classification of right lines Vs left lines dependin on their slope.
+B- Getting the average X and Y in both right and lef lines and consider them as a point on the line.
+C- From the line equation (y = m * x + c), c can be easily calculated.
+D- Using the Y values used in the top and bottom of the specified ROI we can get x = (y_avg - c)/m.
+E- Hence the two lines are etermined and can be drawn.  
 
-![alt text][image1]
+
 
 
 ### 2. Identify potential shortcomings with your current pipeline
 
-
-One potential shortcoming would be what would happen when ... 
-
-Another shortcoming could be ...
+A- Not robust against brightness changes.
+B- Not robust against the not needed lines appeares in the roi. 
 
 
 ### 3. Suggest possible improvements to your pipeline
 
-A possible improvement would be to ...
+A- Using some morphological operations (tophat for example) before canny detection to detect only lines with high contrast.
+ 
 
 Another potential improvement could be to ...
